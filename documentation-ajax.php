@@ -8,9 +8,8 @@ get_header();
 ?>
 
 	<div id="primary" class="content-area">
-			<header class="entry-header">
+			<header class="entry-header single-produits">
 				<div class="big-max-width">
-					<?php symcod_page_thumbnail(); ?>
 					<div class="max-width">
 						<div class="entry-title-div">
 							<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
@@ -26,7 +25,7 @@ get_header();
 				<div id="section-body-docu-search" class="section-body">
 					<a id="search-anchor" style="position:absolute;top:-187px;"></a>
 					<h2><?php _e('Chercher un document','symcod'); ?></h2>
-					<h4><?php _e('Choisir un produit ?','symcod'); ?></h4>
+					<h4 id="version-product-title"><span class="etape bordered"><a href="<?php echo $documentation_permalink;?>/#search-anchor" rel="bookmark"><?php _e('Étape','symcod'); ?> 1</a></span> <?php _e('Choisir un produit ?','symcod'); ?></h4>
 						<div id="docu-search-fields-wrapper">
 							<div id="div-nom-produit">
 								<form id="form-nom-produit">

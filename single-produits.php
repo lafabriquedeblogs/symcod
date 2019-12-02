@@ -30,10 +30,10 @@ get_header();
 
 			<header class="entry-header">
 				<div class="big-max-width">
-					<?php symcod_archive_thumbnail(1); ?>
+					<?php //symcod_archive_thumbnail(1); ?>
 					<div class="max-width">
 						<div class="entry-title-div">
-							<h1 class="entry-title"><?php _e('Documentation','symcod'); ?></h1>
+							<h1 class="entry-title"><?php _e('Téléchargements','symcod'); ?></h1>
 						</div><!-- entry-title-div -->
 					</div><!-- max-width -->
 				</div>
@@ -50,9 +50,6 @@ get_header();
 			
 		?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<header class="entry-header-produit">
-					
-				</header><!-- .entry-header -->
 						
 				<div class="entry-content">
 					<?php the_content(); ?>
@@ -80,7 +77,7 @@ get_header();
 										
 										if( !empty( $version) && $version == 'all' && empty($categorie) ):  ?>
 											
-											<h4 id="choisir-version"><span class="etape"><a href="<?php echo $product_permalink;?>version/all/#search-anchor"><?php _e('Étape','symcod'); ?> 2</a></span><span><?php _e('Choisir une version ?','symcod'); ?></span></h4>
+											<h4 id="choisir-version"><span class="etape bordered"><a href="<?php echo $product_permalink;?>version/all/#search-anchor"><?php _e('Étape','symcod'); ?> 2</a></span><span><?php _e('Choisir une version ?','symcod'); ?></span></h4>
 											
 											</div><!-- #entry-header-produit -->
 											
@@ -102,7 +99,7 @@ get_header();
 																<li id="result-item-<?php echo  get_the_id();?>" class="document-list-result-item categorie-document-list-result-item">
 																	<header>
 																		<figure>
-																			<img src="<?php echo $image_prod;?>" alt="" width="150" height="150" />
+																			<a href="<?php echo $permalink."version/".$version_prod;?>/doc/all/#search-anchor"><img src="<?php echo $image_prod;?>" alt="" width="150" height="150" /></a>
 																			<p>
 																				<a href="<?php echo $image_prod_full;?>" class="loupe-produit-version" data-fancybox>
 																					<svg id="loupe" x="0px" y="0px" viewBox="0 0 21 21"><path d="M20.6,19.1l-6.5-6.5c1-1.3,1.6-3,1.6-4.8c0-4.3-3.5-7.9-7.9-7.9S0,3.5,0,7.9s3.5,7.9,7.9,7.9c1.8,0,3.4-0.6,4.7-1.6l6.5,6.5 c0.2,0.2,0.5,0.3,0.8,0.3c0.3,0,0.6-0.1,0.8-0.3C21.1,20.3,21.1,19.6,20.6,19.1z M2.2,7.9c0-3.1,2.6-5.7,5.7-5.7s5.7,2.6,5.7,5.7 s-2.6,5.7-5.7,5.7S2.2,11,2.2,7.9z"/></svg>
@@ -112,7 +109,7 @@ get_header();
 																	</header>
 																	<div class="docuemnt-entry">
 																		<p class="docuemnt-meta">
-																			<span class="version"><?php _e('Version','symcod'); ?>: <a href="<?php echo $permalink."version/".$version_prod;?>/doc/all/#search-anchor"><strong><?php echo $version_prod;?> »</strong></a></span>
+																			<span class="version"><?php _e('Version','symcod'); ?>: <a href="<?php echo $permalink."version/".$version_prod;?>/doc/all/#search-anchor"><strong><?php echo $version_prod;?></strong></a></span>
 																		</p>
 																		<p class="description"><?php echo $description_prod;?></p>
 																	</div>
@@ -178,7 +175,7 @@ get_header();
 											?>
 											
 											<form id="form-categorie-document">
-												<span class="etape"><a href="<?php echo $documentation_permalink;?>/#search-anchor" rel="bookmark"><?php _e('Étape','symcod'); ?> 3</a></span>
+												<span class="etape bordered"><a href="<?php echo $documentation_permalink;?>/#search-anchor" rel="bookmark"><?php _e('Étape','symcod'); ?> 3</a></span>
 												<select id="categorie-document" name="categorie-document">
 													<option value="<?php echo $product_permalink;?>version/<?php echo $version;?>/doc/all/#search-anchor" ><?php _e('Tous les documents','symcod'); ?></option>
 													
@@ -236,7 +233,7 @@ get_header();
 														}
 																												
 														?>
-															<li id="result-item-<?php echo  $document;?>" data-categorie="<?php echo $categorie;?>" class="document-list-result-item categorie-document-list-result-item">
+															<li id="result-item-<?php echo  $document;?>" data-categorie="<?php echo $categorie;?>" class="document-list-result-item categorie-document-list-result-item document--item">
 																	
 																	<?php if($image == "Hello dude!"): ?>
 																	<header>
@@ -253,15 +250,22 @@ get_header();
 																	<?php endif; ?>
 																	
 																	<div class="docuemnt-entry">
-																		<h3><?php echo $nom_du_document;?></h3>
-																		<p class="docuemnt-meta">
-																			<span class="version"><?php _e('Version','symcod'); ?>: <strong><?php echo $version_du_document;?></strong></span><br />
-																		</p>
-																		<p class="description"><?php echo $description_courte;?></p>
+																		<h3><?php echo $nom_du_document;?>
 																		
+																		<?php if( !empty( $version_du_document )): ?>
+																		 <span class="version"><?php _e('Ver.','symcod'); ?>: <strong><?php echo $version_du_document;?></strong></span>
+																		<?php endif; ?>
+																		
+																		</h3>
+
+																		<p class="description"><?php echo $description_courte;?></p>
+																		<?php
+																			/*
 																		<p class="docuemnt-meta">
 																			<span class="type"><?php _e('Type de document','symcod'); ?>: <strong><?php echo strtoupper( $type_de_document["ID"]);?></strong></span>
 																		</p>
+																		*/
+																		?>
 																		<a href="<?php echo $url_du_document; ?>" target="_blank" class="download">
 																			<svg class="icon-type-download" width="64" height="64">
 																			    <use xlink:href="<?php echo esc_url( "{$type_de_document['_file_url']}#{$type_de_document['ID']}" ); ?>"></use>

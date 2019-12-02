@@ -2,6 +2,25 @@
 	position: static;
 }
 
+.single-produits {
+	&.entry-header, .entry-header {
+		height: auto;
+	}
+	h1.entry-title {
+		color: #000;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		padding-left: 32px;
+	}
+	
+}
+
+#section-docu-search {
+	padding-top: 40px;
+	h2 {
+		font-size: 39px;
+	}
+}
 #docu-search-fields-wrapper {
 	padding: 20px 10px;
 	border: 1px #f1f1f1 solid;
@@ -186,6 +205,10 @@
 					img{ 
 						display: block;
 					}
+					p {
+						margin: 0;
+						height: 22px;
+					}
 				}
 				
 				.loupe-produit-version {
@@ -224,7 +247,23 @@
 					}
 				}
 				
-	
+				h3 {
+					text-decoration: underline;
+				}
+			}
+			&.document--item {
+				padding: 15px 15px 0;
+				.docuemnt-entry h3 {
+					text-decoration:  none;
+				}
+				.docuemnt-entry h3 span {
+					text-transform: none;
+					color: #4b4b4b;
+					display: inline-block;
+					margin-left: 10px;
+					font-weight: 400;
+					
+				}
 			}
 			p.docuemnt-meta {
 				font-size: 0.85rem;
@@ -232,9 +271,13 @@
 				margin-bottom: 10px;
 				.version {
 					color: #777;
+					font-weight: 700;
+					font-size: 1.5em;
 				}
 				a strong {
 					text-decoration: underline;	
+					font-weight: 700;
+					font-size: 1.5em;
 				}
 			}
 			.download {
@@ -306,6 +349,7 @@
 		padding: 0 10px 0;
 		a {
 			color: #5b5b5b;
+			text-decoration: underline;
 		}
 		&.etape {
 			background: #5b5b5b;
@@ -317,6 +361,12 @@
 			border-radius: 200px;
 			a {
 				color: #fff;
+				text-decoration: none;
+			}
+			
+			&.bordered {
+				border: 4px red solid;
+				margin-right: 10px;
 			}
 		}
 	}
@@ -325,6 +375,17 @@
 #choisir-version span + span {
 	font-size: 25px;
 }
+
+/*
+#version-product-title, #produit-title, #choisir-version{
+	.serach-step-header {
+		a {
+			text-decoration: underline !important;
+		}
+	}
+}
+*/
+
 #form-categorie-document {
 	display: flex;
 	flex-direction: row;
@@ -351,6 +412,9 @@
 			a {
 				color: #fff;
 			}
+			&.bordered {
+				border: 4px red solid;
+			}
 		}
 	}
 }
@@ -368,7 +432,7 @@
 		background-repeat: no-repeat;
 		background-position: right 20px center;
 		margin-left: 10px;
-		width: calc(100% - 100px);
+		width: calc(100% - 120px);
 		//max-width: 50%;
 		option {
 			font-weight: normal;
