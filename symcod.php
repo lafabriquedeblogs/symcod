@@ -239,7 +239,10 @@ class symcod_produits {
 		);
 		register_post_type( 'document', $args_document );
 
-
+		unset($args);
+		unset($labels);
+		unset($rewrite);
+		
 		$labels = array(
 			'name'                       => _x( 'Catégories de document', 'Taxonomy General Name', 'symcod' ),
 			'singular_name'              => _x( 'Catégorie de document', 'Taxonomy Singular Name', 'symcod' ),
@@ -271,6 +274,8 @@ class symcod_produits {
 			'show_in_nav_menus'          => true,
 			'show_tagcloud'              => true,
 			'show_in_rest'               => true,
+			'meta_box_cb'				 => 'meta_box_taxdocument',
+			'show_in_quick_edit'		 => true,
 		);
 		register_taxonomy( 'taxdocument', array( 'document' ), $args );
 		

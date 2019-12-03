@@ -156,6 +156,7 @@ add_filter('manage_edit-produits_sortable_columns','order_column_produits_regist
 
 
 // remove the old box
+/*
 function remove_default_categories_box() {
     remove_meta_box('taxdocumentdiv', 'document', 'side');
 }
@@ -166,6 +167,7 @@ function add_custom_categories_box() {
     add_meta_box('customtaxdocumentdiv', 'Catégories des documents', 'custom_post_taxdocument_meta_box', 'document', 'side', 'low', array( 'taxonomy' => 'taxdocument' ));
 }
 add_action('admin_menu', 'add_custom_categories_box');
+*/
 
 /**
  * Display CUSTOM post categories form fields.
@@ -174,8 +176,8 @@ add_action('admin_menu', 'add_custom_categories_box');
  *
  * @param object $post
  */
-function custom_post_taxdocument_meta_box( $post, $box ) {
-    
+//function custom_post_taxdocument_meta_box( $post, $box ) {
+function meta_box_taxdocument( $post, $box ) {
     $defaults = array('taxonomy' => 'taxdocument');
     
     if ( !isset($box['args']) || !is_array($box['args']) )
@@ -191,31 +193,22 @@ function custom_post_taxdocument_meta_box( $post, $box ) {
     <div id="taxonomy-<?php echo $taxonomy; ?>" class="categorydiv">
         <ul id="<?php echo $taxonomy; ?>-tabs" class="category-tabs">
             <li class="tabs"><a href="#<?php echo $taxonomy; ?>-all" tabindex="3"><?php echo $tax->labels->all_items; ?></a></li>
-            <li class="hide-if-no-js"><a href="#<?php echo $taxonomy; ?>-ido" tabindex="3"><?php _e( 'trier par id' ); ?></a></li>
-            <li class="hide-if-no-js"><a href="#<?php echo $taxonomy; ?>-pop" tabindex="3"><?php _e( 'Most Used' ); ?></a></li>
+            <li class="hide-if-no-js"><a href="#<?php echo $taxonomy; ?>-ido" tabindex="3"><?php _e( '0 > 100' ); ?></a></li>
+            <li class="hide-if-no-js"><a href="#<?php echo $taxonomy; ?>-pop" tabindex="3"><?php _e( '100 > 0  ' ); ?></a></li>
             
         </ul>
 
         <div id="<?php echo $taxonomy; ?>-pop" class="tabs-panel" style="display: none;">
-            <ul id="<?php echo $taxonomy; ?>checklist-pop" class="categorychecklist form-no-clear" >
-                <?php $popular_ids = wp_popular_terms_checklist($taxonomy,0,-1); ?>
-            </ul>
-        </div>
-        
-        <div id="<?php echo $taxonomy; ?>-ido" class="tabs-panel">
             <?php
-            $name = ( $taxonomy == 'taxdocument' ) ? 'post_category' : 'tax_input[' . $taxonomy . ']';
+	            
+	            $name = ( $taxonomy == 'taxdocument' ) ? 'post_category' : 'tax_input[' . $taxonomy . ']';
+				echo "<input type='hidden' name='{$name}[]' value='0' />";
             
-            echo "<input type='hidden' name='{$name}[]' value='0' />"; // Allows for an empty term set to be sent. 0 is an invalid Term ID and will be ignored by empty() checks.
             ?>
-            <ul id="<?php echo $taxonomy; ?>checklist" class="list:<?php echo $taxonomy?> categorychecklist form-no-clear">
-                <?php 
-                /**
-                 * This is the one line we had to change in the original function
-                 * Notice that "checked_ontop" is now set to FALSE
-                 */
-                //$list = wp_terms_checklist($post->ID, array( 'taxonomy' => $taxonomy, 'popular_cats' => $popular_ids, 'checked_ontop' => FALSE , 'echo'=> false ) );
-                
+            
+            <ul id="<?php echo $taxonomy; ?>checklist-pop" class="categorychecklist form-no-clear" >
+                <?php //$popular_ids = wp_popular_terms_checklist($taxonomy,0,-1);
+	                
                 $terms = get_the_terms( $post->ID, $taxonomy );
                 $checked_terms = array();
                 foreach( $terms as $term ){
@@ -226,17 +219,80 @@ function custom_post_taxdocument_meta_box( $post, $box ) {
                 	'hide_empty' => false,
                 	'meta_key' => 'id_ordre',
                 	'orderby' => 'meta_value_num',
-                	'order' => 'ASC'
+                	'order' => 'DESC'
 				) );
 				
 				foreach( $all_terms as $term ){
 					if( !in_array( $term->term_id, $checked_terms ) ):
+						
+						$id_ordre = get_field('id_ordre',$term);
+						
 					?>
-						<li id="taxdocument-<?php echo $term->term_id;?>" class="popular-category wpseo-term-unchecked"><label class="selectit"><input value="<?php echo  $term->term_id;?>" type="checkbox" name="tax_input[taxdocument][]" id="in-taxdocument-<?php echo $term->term_id;?>"> <?php echo $term->name;?></label></li>
+						<li id="taxdocument-<?php echo $term->term_id;?>" class="popular-category wpseo-term-unchecked"><label class="selectit"><input value="<?php echo  $term->term_id;?>" type="checkbox" name="tax_input[taxdocument][]" id="in-taxdocument-<?php echo $term->term_id;?>"> <?php echo $id_ordre.' - '.$term->name;?></label></li>
 					<?php
 						else:
 					?>
-						<li id="taxdocument-<?php echo $term->term_id;?>" class="popular-category wpseo-non-primary-term"><label class="selectit"><input value="<?php echo $term->term_id;?>" type="checkbox" name="tax_input[taxdocument][]" id="in-taxdocument-<?php echo $term->term_id;?>" checked="checked"> <?php echo $term->name;?></label></li>					
+						<li id="taxdocument-<?php echo $term->term_id;?>" class="popular-category wpseo-non-primary-term"><label class="selectit"><input value="<?php echo $term->term_id;?>" type="checkbox" name="tax_input[taxdocument][]" id="in-taxdocument-<?php echo $term->term_id;?>" checked="checked"> <?php echo $id_ordre.' - '.$term->name;?></label></li>					
+					<?php
+						endif;
+				}	                
+	                
+	                
+                ?>
+            </ul>
+        </div>
+        
+        <div id="<?php echo $taxonomy; ?>-ido" class="tabs-panel">
+            <?php
+            $name = ( $taxonomy == 'taxdocument' ) ? 'post_category' : 'tax_input[' . $taxonomy . ']';
+            
+            echo "<input type='hidden' name='{$name}[]' value='0' />"; // Allows for an empty term set to be sent. 0 is an invalid Term ID and will be ignored by empty() checks.
+            
+            echo 'ASC';
+            ?>
+            <ul id="<?php echo $taxonomy; ?>checklist" class="list:<?php echo $taxonomy?> categorychecklist form-no-clear">
+                <?php 
+                /**
+                 * This is the one line we had to change in the original function
+                 * Notice that "checked_ontop" is now set to FALSE
+                 */
+                //$list = wp_terms_checklist($post->ID, array( 'taxonomy' => $taxonomy, 'popular_cats' => $popular_ids, 'checked_ontop' => FALSE , 'echo'=> false ) );
+                
+                unset($terms);
+                unset($checked_terms);
+                unset($all_terms);
+                
+                $terms = get_the_terms( $post->ID, $taxonomy );
+                $checked_terms = array();
+                foreach( $terms as $term ){
+	                $checked_terms[] = $term->term_id;
+                }
+                $all_terms = get_terms( array(
+                	'taxonomy' => $taxonomy,
+                	'hide_empty' => false,
+                	'orderby' => 'meta_value_num',
+                	'order' => 'ASC',
+                	'meta_query' => array(
+	                	array(
+		                	'key' => 'id_ordre',
+		                	'meta_compare' => 'EXISTS',
+		                	'type' => 'NUMERIC'
+	                	)
+                	),
+                	
+				) );
+
+				foreach( $all_terms as $term ){
+					
+					$id_ordre = get_field('id_ordre',$term);
+					
+					if( !in_array( $term->term_id, $checked_terms ) ):
+					?>
+						<li id="taxdocument-<?php echo $term->term_id;?>" class="popular-category wpseo-term-unchecked"><label class="selectit"><input value="<?php echo  $term->term_id;?>" type="checkbox" name="tax_input[taxdocument][]" id="in-taxdocument-<?php echo $term->term_id;?>"> <?php echo $id_ordre.' - '.$term->name;?></label></li>
+					<?php
+						else:
+					?>
+						<li id="taxdocument-<?php echo $term->term_id;?>" class="popular-category wpseo-non-primary-term"><label class="selectit"><input value="<?php echo $term->term_id;?>" type="checkbox" name="tax_input[taxdocument][]" id="in-taxdocument-<?php echo $term->term_id;?>" checked="checked"> <?php echo $id_ordre.' - '.$term->name;?></label></li>					
 					<?php
 						endif;
 				}
