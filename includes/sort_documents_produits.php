@@ -188,13 +188,13 @@ function meta_box_taxdocument( $post, $box ) {
     extract( wp_parse_args($args, $defaults), EXTR_SKIP );
     
     $tax = get_taxonomy($taxonomy);
-	
+
     ?>
     <div id="taxonomy-<?php echo $taxonomy; ?>" class="categorydiv">
         <ul id="<?php echo $taxonomy; ?>-tabs" class="category-tabs">
             <li class="tabs"><a href="#<?php echo $taxonomy; ?>-all" tabindex="3"><?php echo $tax->labels->all_items; ?></a></li>
-            <li class="hide-if-no-js"><a href="#<?php echo $taxonomy; ?>-ido" tabindex="3"><?php _e( '0 > 100' ); ?></a></li>
-            <li class="hide-if-no-js"><a href="#<?php echo $taxonomy; ?>-pop" tabindex="3"><?php _e( '100 > 0  ' ); ?></a></li>
+            <li class="hide-if-no-js"><a href="#<?php echo $taxonomy; ?>-ido" tabindex="3"><?php _e( 'ASC' ); ?></a></li>
+            <li class="hide-if-no-js"><a href="#<?php echo $taxonomy; ?>-pop" tabindex="3"><?php _e( 'DESC' ); ?></a></li>
             
         </ul>
 
@@ -214,25 +214,36 @@ function meta_box_taxdocument( $post, $box ) {
                 foreach( $terms as $term ){
 	                $checked_terms[] = $term->term_id;
                 }
-                $all_terms = get_terms( array(
+                $args = array(
                 	'taxonomy' => $taxonomy,
                 	'hide_empty' => false,
-                	'meta_key' => 'id_ordre',
+                	'meta_key' =>'id_ordre',
                 	'orderby' => 'meta_value_num',
-                	'order' => 'DESC'
-				) );
+                	'order' => 'DESC',
+/*
+                	'meta_query' => array(
+	                	array(
+		                	'key' => 'id_ordre',
+		                	'meta_compare' => 'EXISTS',
+	                	)
+                	),
+*/
+                	
+				);
 				
-				foreach( $all_terms as $term ){
+                $all_terms = new WP_Term_Query( $args );
+
+				foreach( $all_terms->terms as $term ){
 					if( !in_array( $term->term_id, $checked_terms ) ):
 						
 						$id_ordre = get_field('id_ordre',$term);
 						
 					?>
-						<li id="taxdocument-<?php echo $term->term_id;?>" class="popular-category wpseo-term-unchecked"><label class="selectit"><input value="<?php echo  $term->term_id;?>" type="checkbox" name="tax_input[taxdocument][]" id="in-taxdocument-<?php echo $term->term_id;?>"> <?php echo $id_ordre.' - '.$term->name;?></label></li>
+						<li id="taxdocument-<?php echo $term->term_id;?>" class="popular-category"><label class="selectit"><input value="<?php echo  $term->term_id;?>" type="checkbox" name="tax_input[taxdocument][]" id="in-taxdocument-<?php echo $term->term_id;?>"> <?php echo '<small>'.$id_ordre.'</small> - '.$term->name;?></label></li>
 					<?php
 						else:
 					?>
-						<li id="taxdocument-<?php echo $term->term_id;?>" class="popular-category wpseo-non-primary-term"><label class="selectit"><input value="<?php echo $term->term_id;?>" type="checkbox" name="tax_input[taxdocument][]" id="in-taxdocument-<?php echo $term->term_id;?>" checked="checked"> <?php echo $id_ordre.' - '.$term->name;?></label></li>					
+						<li id="taxdocument-<?php echo $term->term_id;?>" class="popular-category"><label class="selectit"><input value="<?php echo $term->term_id;?>" type="checkbox" name="tax_input[taxdocument][]" id="in-taxdocument-<?php echo $term->term_id;?>" checked="checked"> <?php echo '<small>'.$id_ordre.'</small> - '.$term->name;?></label></li>					
 					<?php
 						endif;
 				}	                
@@ -248,7 +259,6 @@ function meta_box_taxdocument( $post, $box ) {
             
             echo "<input type='hidden' name='{$name}[]' value='0' />"; // Allows for an empty term set to be sent. 0 is an invalid Term ID and will be ignored by empty() checks.
             
-            echo 'ASC';
             ?>
             <ul id="<?php echo $taxonomy; ?>checklist" class="list:<?php echo $taxonomy?> categorychecklist form-no-clear">
                 <?php 
@@ -267,32 +277,35 @@ function meta_box_taxdocument( $post, $box ) {
                 foreach( $terms as $term ){
 	                $checked_terms[] = $term->term_id;
                 }
-                $all_terms = get_terms( array(
+                $args = array(
                 	'taxonomy' => $taxonomy,
                 	'hide_empty' => false,
-                	'orderby' => 'meta_value_num',
+                	'orderby' => 'meta_value',
                 	'order' => 'ASC',
                 	'meta_query' => array(
 	                	array(
 		                	'key' => 'id_ordre',
 		                	'meta_compare' => 'EXISTS',
-		                	'type' => 'NUMERIC'
 	                	)
                 	),
                 	
-				) );
-
-				foreach( $all_terms as $term ){
+				);
+				
+                $all_terms = new WP_Term_Query( $args );
+				
+				$tt = array_reverse($all_terms->terms);
+				
+				foreach( $tt as $term ){
 					
 					$id_ordre = get_field('id_ordre',$term);
 					
 					if( !in_array( $term->term_id, $checked_terms ) ):
 					?>
-						<li id="taxdocument-<?php echo $term->term_id;?>" class="popular-category wpseo-term-unchecked"><label class="selectit"><input value="<?php echo  $term->term_id;?>" type="checkbox" name="tax_input[taxdocument][]" id="in-taxdocument-<?php echo $term->term_id;?>"> <?php echo $id_ordre.' - '.$term->name;?></label></li>
+						<li id="taxdocument-<?php echo $term->term_id;?>" class="popular-category"><label class="selectit"><input value="<?php echo  $term->term_id;?>" type="checkbox" name="tax_input[taxdocument][]" id="in-taxdocument-<?php echo $term->term_id;?>"> <?php echo '<small>'.$id_ordre.'</small> - '.$term->name;?></label></li>
 					<?php
 						else:
 					?>
-						<li id="taxdocument-<?php echo $term->term_id;?>" class="popular-category wpseo-non-primary-term"><label class="selectit"><input value="<?php echo $term->term_id;?>" type="checkbox" name="tax_input[taxdocument][]" id="in-taxdocument-<?php echo $term->term_id;?>" checked="checked"> <?php echo $id_ordre.' - '.$term->name;?></label></li>					
+						<li id="taxdocument-<?php echo $term->term_id;?>" class="popular-category"><label class="selectit"><input value="<?php echo $term->term_id;?>" type="checkbox" name="tax_input[taxdocument][]" id="in-taxdocument-<?php echo $term->term_id;?>" checked="checked"> <?php echo '<small>'.$id_ordre.'</small> - '.$term->name;?></label></li>					
 					<?php
 						endif;
 				}

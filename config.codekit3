@@ -564,6 +564,28 @@
 		"oAP": "/assets/index.php",
 		"oF": 0
 		},
+	"/assets/js/app-documentation-admin-min.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "/assets/js/app-documentation-admin-min-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
+		},
+	"/assets/js/app-documentation-admin.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "/assets/js/app-documentation-admin-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
+		},
 	"/assets/js/app-documentation-min.js": {
 		"bF": 0,
 		"ft": 64,
@@ -642,6 +664,14 @@
 		"hM": 0,
 		"oA": 0,
 		"oAP": "/documentation-ajax.php",
+		"oF": 0
+		},
+	"/includes/ajax_functions.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/includes/ajax_functions.php",
 		"oF": 0
 		},
 	"/includes/documentation-functions.php": {

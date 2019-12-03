@@ -66,7 +66,7 @@ class symcod_produits {
 		add_action( 'init', array($this, 'init'), 0 );
 		add_action( 'init', array($this,'symcod_documention_rewrite_rules') );
 		add_action( 'wp_enqueue_scripts', array($this,'symcod_documentation_scripts') );
-		
+		add_action('admin_enqueue_scripts', array($this,'admin_enqueue') );
 		add_filter( 'the_content',  array($this,'produits_content_filter') );
 		add_filter( 'query_vars', array($this,'myplugin_register_query_vars') );
 		
@@ -82,7 +82,19 @@ class symcod_produits {
 			'docuNonce' => wp_create_nonce( 'documentation-script-nonce' ),
 		));	
 	}
-	
+	public function admin_enqueue($hook) {
+	    // Only add to the edit.php admin page.
+	    // See WP docs.
+
+	    if ('post.php' !== $hook) {
+	        return;
+	    }
+	    wp_enqueue_script('my_custom_script', $this->jsURL('app-documentation-admin.js'), array('jquery'), null, true );
+	    wp_localize_script( 'my_custom_script', 'Documentation', array(
+			'ajaxurl'          => admin_url( 'admin-ajax.php' ),
+			'docuNonce' => wp_create_nonce( 'documentation-script-nonce' ),
+		));
+	}	
 	
 	public function symcod_documention_rewrite_rules(){
 		/* http://symcod.com/?page=***&post_type=produits&version=***&categorie=*** */
@@ -421,8 +433,13 @@ function my_custom_function( $content, $field, $value, $lead_id, $form_id ){
 
 
 
+
+
+
+
+
 include( plugin_dir_path( __FILE__ ) . '/symcod-templates.php');
 include( plugin_dir_path( __FILE__ ) . '/includes/documentation-functions.php');
 include( plugin_dir_path( __FILE__ ) . '/includes/gravityform-select.php');
 include( plugin_dir_path( __FILE__ ) . '/includes/sort_documents_produits.php');
-
+include( plugin_dir_path( __FILE__ ) . '/includes/ajax_functions.php');
