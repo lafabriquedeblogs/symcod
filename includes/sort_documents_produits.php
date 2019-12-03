@@ -79,6 +79,82 @@ function wpse_53094_sort_get_terms_args( $args, $taxonomies )
 */
 
 
+function add_new_documen_text_column($header_text_columns) {
+  $header_text_columns['menu_order'] = "Order";
+  return $header_text_columns;
+}
+add_action('manage_edit-document_columns', 'add_new_documen_text_column');
+
+
+function show_document_order_column($name){
+  global $post;
+
+  switch ($name) {
+    case 'menu_order':
+      $order = $post->menu_order;
+      echo $order;
+      break;
+   default:
+      break;
+   }
+}
+add_action('manage_document_posts_custom_column','show_document_order_column');
+
+/**
+* make column sortable
+*/
+function order_column_document_register_sortable($columns){
+  $columns['menu_order'] = 'menu_order';
+  return $columns;
+}
+add_filter('manage_edit-document_sortable_columns','order_column_document_register_sortable');
+
+/*
+ *
+ *
+ *
+ *
+*/
+
+
+function add_new_produits_column($header_text_columns) {
+  $header_text_columns['menu_order'] = "Order";
+  return $header_text_columns;
+}
+add_action('manage_edit-produits_columns', 'add_new_produits_column');
+
+
+function show_produits_order_column($name){
+  global $post;
+
+  switch ($name) {
+    case 'menu_order':
+      $order = $post->menu_order;
+      echo $order;
+      break;
+   default:
+      break;
+   }
+}
+add_action('manage_produits_posts_custom_column','show_produits_order_column');
+
+/**
+* make column sortable
+*/
+function order_column_produits_register_sortable($columns){
+  $columns['menu_order'] = 'menu_order';
+  return $columns;
+}
+add_filter('manage_edit-produits_sortable_columns','order_column_produits_register_sortable');
+
+/*
+ *
+ *
+ *
+ *
+*/
+
+
 // remove the old box
 function remove_default_categories_box() {
     remove_meta_box('taxdocumentdiv', 'document', 'side');
@@ -122,7 +198,7 @@ function custom_post_taxdocument_meta_box( $post, $box ) {
 
         <div id="<?php echo $taxonomy; ?>-pop" class="tabs-panel" style="display: none;">
             <ul id="<?php echo $taxonomy; ?>checklist-pop" class="categorychecklist form-no-clear" >
-                <?php $popular_ids = wp_popular_terms_checklist($taxonomy); ?>
+                <?php $popular_ids = wp_popular_terms_checklist($taxonomy,0,-1); ?>
             </ul>
         </div>
         
