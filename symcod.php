@@ -414,7 +414,10 @@ function my_custom_function( $content, $field, $value, $lead_id, $form_id ){
 	return $content;
 }
 
+
+
 include( plugin_dir_path( __FILE__ ) . '/symcod-templates.php');
 include( plugin_dir_path( __FILE__ ) . '/includes/documentation-functions.php');
 include( plugin_dir_path( __FILE__ ) . '/includes/gravityform-select.php');
+include( plugin_dir_path( __FILE__ ) . '/includes/sort_documents_produits.php');
 
