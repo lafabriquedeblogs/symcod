@@ -2,7 +2,7 @@
 
 jQuery(document).ready( function($){
 	
-	$(".acf-field-5db0a3dd625c7").on( "change", 'select', function(e){		
+	$(".acf-repeater").on( "change", '.acf-field-5db0a3dd625c7 select', function(e){		
 		var _row = $(this).parent().parent().parent();
 		var _cal = $(this).val();
 		var _input = _row.children('.acf-field-5db0a5d5201ad').find('input');

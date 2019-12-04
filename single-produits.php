@@ -216,6 +216,8 @@ get_header();
 														$url_du_document = get_field('url_du_document',$document);
 														$description_courte = get_field('description_courte',$document);
 														
+														$menu_order = get_post_field('menu_order', $document);
+														
 														if($telecharger_un_document){
 															$url_du_document = $telecharger_un_document;
 														}
@@ -250,7 +252,7 @@ get_header();
 																	<?php endif; ?>
 																	
 																	<div class="docuemnt-entry">
-																		<h3><?php echo $nom_du_document;?>
+																		<h3><?php echo $menu_order;?> - <?php echo $nom_du_document;?>
 																		
 																		<?php if( !empty( $version_du_document )): ?>
 																		 <span class="version"><?php _e('Ver.','symcod'); ?>: <strong><?php echo $version_du_document;?></strong></span>
