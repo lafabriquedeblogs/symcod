@@ -16,7 +16,6 @@ get_header();
 		$categorie = get_query_var('doc');
 		
 		
-		
 		$versions_produit_disponibles_raw =  str_replace("<br />", ",", get_field('versions_produit'));
 		$versions_produit_disponibles = preg_replace('/\s/', '', $versions_produit_disponibles_raw);
 		$versions_produit_array = explode(",", $versions_produit_disponibles);
@@ -218,19 +217,23 @@ get_header();
 														
 														$menu_order = get_post_field('menu_order', $document);
 														
+														
 														if($telecharger_un_document){
 															$url_du_document = $telecharger_un_document;
 														}
 														
 														$image = $image_data["sizes"]['thumbnail'];
-														$image_prod_full = $image_data["sizes"]['large'];
-														
+														$image_prod_full = $image_data["sizes"]['large'];				
 														
 														$categorie = $doc[1];
+
 														
 														if( !in_array( $categorie, $categorie_display )){
 															
-															echo '<li data-categorie="'.$categorie.'" class="document-list-result-item categorie-document-list-result-item document-list-result-item-title-li"><h4>'.$categorie.'</h4></li>';
+															$category_order = get_term_by('name',$categorie ,'taxdocument' );
+															$category_id_order = get_field('id_ordre',$category_order);
+
+															echo '<li data-categorie="'.$categorie.'" class="document-list-result-item categorie-document-list-result-item document-list-result-item-title-li"><h4>'.$category_id_order.' - '.$categorie.'</h4></li>';
 															$categorie_display[] = $categorie;
 														}
 																												
