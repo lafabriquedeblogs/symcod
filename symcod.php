@@ -449,10 +449,15 @@ function unique_multidim_array($array, $key) {
     return $temp_array;
 }
 
+/*
 function sortByOrder($a, $b) {
-    return $b[0] - $a[0];
+    return $a['menu_order'] - $b['menu_order'];
 }
-
+*/
+function cmp_by_optionNumber($a, $b) {
+  return $a["menu_order"] - $b["menu_order"];
+  //return strcasecmp($a['menu_order'], $b['menu_order']);
+}
 
 
 

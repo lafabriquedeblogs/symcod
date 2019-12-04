@@ -262,10 +262,10 @@ get_header();
 															
 															if( has_term( $cat[0],'taxdocument',$document ) ){
 																
-																
+																$documents_array_wrap = array();
 																$documents_array = array();
 																
-																$documents_array[]['menu_order'] = $menu_order;
+																$documents_array['menu_order'] = $menu_order;
 																
 																ob_start();
 													
@@ -309,25 +309,27 @@ get_header();
 															<?php 																
 																
 																$content = ob_get_clean();
-																$documents_array[]['document'] = $nom_du_document;//;
-																
-																usort($documents_array, 'sortByOrder');
+																$documents_array['document'] = $nom_du_document;//;
 																
 																
-
+																
 																$categories_array[$k][] = $documents_array;
-																echo '<pre>';
-																	//var_dump($category_id_order);
-																echo '</pre>';
-															}
 																
+															}
+															sort($categories_array[$k]);
+															/*
+															usort($categories_array[$k][],function($a,$b){
+																return $a['menu_order'] - $b['menu_order'];
+															});
+*/
 														}
 
 													
 														} 
 													ksort($categories_array);	
 													echo '<pre>';
-														var_dump(json_encode($categories_array,JSON_PRETTY_PRINT));
+													   var_dump(json_encode($categories_array,JSON_PRETTY_PRINT));
+													   //var_dump($categories_array);
 													echo '</pre>';
 													
 														
