@@ -7,6 +7,7 @@
  * @package symcod
  */
 
+
 get_header();
 
 		$post_id = get_the_id();
@@ -218,10 +219,11 @@ get_header();
 															$category_order = get_term_by('name',$categorie ,'taxdocument' );
 															$category_id_order = get_field('id_ordre',$category_order);
 															
-															$categories_array[$category_id_order][] = $categorie;
+															$categories_array[] = $category_id_order.'-'.$categorie;
 															//$categories_array[$category_id_order][] = '<li data-categorie="'.$categorie.'" class="document-list-result-item categorie-document-list-result-item document-list-result-item-title-li"><h4>'.$category_id_order.' - '.$categorie.'</h4></li>';
 														}
 													}
+			
 													echo '<pre>';
 														var_dump($categories_array);
 													echo '</pre>';
@@ -251,6 +253,7 @@ get_header();
 														$image_prod_full = $image_data["sizes"]['large'];				
 																												
 														$categorie = $doc[1];
+														$documents_array = array();
 														
 														foreach($categories_array as $k => $cat){
 															
@@ -263,9 +266,9 @@ get_header();
 															if( has_term( $cat[0],'taxdocument',$document ) ){
 																
 																$documents_array_wrap = array();
-																$documents_array = array();
 																
-																$documents_array['menu_order'] = $menu_order;
+																//$documents_array['menu_order'] = $menu_order;
+/*
 																
 																ob_start();
 													
@@ -307,28 +310,24 @@ get_header();
 																	</li>
 																										
 															<?php 																
+																$ob = ob_get_clean();
 																
-																$content = ob_get_clean();
-																$documents_array['document'] = $nom_du_document;//;
+*/
+															
 																
-																
-																
-																$categories_array[$k][] = $documents_array;
 																
 															}
-															sort($categories_array[$k]);
-															/*
-															usort($categories_array[$k][],function($a,$b){
-																return $a['menu_order'] - $b['menu_order'];
-															});
-*/
+															$categories_array[$k][] = $documents_array;
+															
+															//sort($categories_array[$k]);
 														}
 
 													
 														} 
-													ksort($categories_array);	
+													//ksort($categories_array);	
 													echo '<pre>';
-													   var_dump(json_encode($categories_array,JSON_PRETTY_PRINT));
+													
+													   //var_dump(json_encode($categories_array,JSON_PRETTY_PRINT));
 													   //var_dump($categories_array);
 													echo '</pre>';
 													
