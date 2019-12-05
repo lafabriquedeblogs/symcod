@@ -231,37 +231,33 @@ get_header();
 													
 													
 																			
-													foreach( $document_ids as $doc ){
-																												
-														$document = $doc["ID"];
+													foreach( $all_docs as $doc_cat => $doc ){															
 														
-														$image_data = get_field('image',$document);
-														
-														$nom_du_document = get_field('nom_du_document',$document) ? get_field('nom_du_document',$document) :  get_the_title( $document );
-														
-														$type_de_document = get_field('type_de_document',$document);
-														$version_du_document = get_field('version_du_document',$document);
-														$telecharger_un_document = get_field('telecharger_un_document',$document);
-														$url_du_document = get_field('url_du_document',$document);
-														$description_courte = get_field('description_courte',$document);
-														
-														$menu_order = get_post_field('menu_order', $document);
-														
-														if($telecharger_un_document){
-															$url_du_document = $telecharger_un_document;
-														}
-														
-														$image = $image_data["sizes"]['thumbnail'];
-														$image_prod_full = $image_data["sizes"]['large'];
-														
-														
-														$categorie = $doc["cat"];
-														
-														if( !in_array( $categorie, $categorie_display )){
 															
-															echo '<li data-categorie="'.$categorie.'" class="document-list-result-item categorie-document-list-result-item document-list-result-item-title-li"><h4>'.$categorie.'</h4></li>';
-															$categorie_display[] = $categorie;
-														}
+															echo '<li data-categorie="'.$doc_cat.'" class="document-list-result-item categorie-document-list-result-item document-list-result-item-title-li"><h4>'.$doc_cat.'</h4></li>';
+										
+															
+															foreach( $doc as $d ){
+																$document = $d[2];
+																
+																$image_data = get_field('image',$document);
+																
+																$nom_du_document = get_field('nom_du_document',$document) ? get_field('nom_du_document',$document) :  get_the_title( $document );
+																
+																$type_de_document = get_field('type_de_document',$document);
+																$version_du_document = get_field('version_du_document',$document);
+																$telecharger_un_document = get_field('telecharger_un_document',$document);
+																$url_du_document = get_field('url_du_document',$document);
+																$description_courte = get_field('description_courte',$document);
+																
+																$menu_order = get_post_field('menu_order', $document);
+																
+																if($telecharger_un_document){
+																	$url_du_document = $telecharger_un_document;
+																}
+																
+																$image = $image_data["sizes"]['thumbnail'];
+																$image_prod_full = $image_data["sizes"]['large'];																
 																												
 														?>
 															<li id="result-item-<?php echo  $document;?>" data-categorie="<?php echo $categorie;?>" class="document-list-result-item categorie-document-list-result-item document--item">
@@ -305,7 +301,9 @@ get_header();
 																		</a>
 																	</div>
 															</li>														
-												<?php } 
+												<?php 
+														}
+													} 
 													
 												?>
 											</ul>
