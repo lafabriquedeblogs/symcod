@@ -718,9 +718,9 @@
 		"cB": 0,
 		"ft": 8192,
 		"hM": 0,
-		"oA": 1,
+		"oA": 0,
 		"oAP": "/symcod.php",
-		"oF": 1
+		"oF": 0
 		}
 	},
 "hooks": [
