@@ -63,7 +63,7 @@ get_header();
 								
 								<div id="entry-header-produit">
 								<div>
-									<h3 id="produit-title" class="entry-title"><span class="etape"><a href="<?php echo $documentation_permalink;?>/#search-anchor" rel="bookmark"><?php _e('Étape','symcod'); ?> 1</a></span><span class="serach-step-header"><a href="<?php echo $documentation_permalink;?>/#search-anchor" rel="bookmark"><?php _e('Produit','symcod'); ?>:</a></span> <?php the_title();?></h3>	
+									<h3 id="produit-title" class="entry-title"><span class="etape"><a href="<?php echo $documentation_permalink;?>/" rel="bookmark"><?php _e('Étape','symcod'); ?> 1</a></span><span class="serach-step-header"><a href="<?php echo $documentation_permalink;?>/" rel="bookmark"><?php _e('Produit','symcod'); ?>:</a></span> <?php the_title();?></h3>	
 								</div>	
 								
 
@@ -77,7 +77,7 @@ get_header();
 										
 										if( !empty( $version) && $version == 'all' && empty($categorie) ):  ?>
 											
-											<h4 id="choisir-version"><span class="etape bordered"><a href="<?php echo $product_permalink;?>version/all/#search-anchor"><?php _e('Étape','symcod'); ?> 2</a></span><span><?php _e('Choisir une version ?','symcod'); ?></span></h4>
+											<h4 id="choisir-version"><span class="etape bordered"><a href="<?php echo $product_permalink;?>version/all/"><?php _e('Étape','symcod'); ?> 2</a></span><span><?php _e('Choisir une version ?','symcod'); ?></span></h4>
 											
 											</div><!-- #entry-header-produit -->
 											
@@ -99,7 +99,7 @@ get_header();
 																<li id="result-item-<?php echo  get_the_id();?>" class="document-list-result-item categorie-document-list-result-item">
 																	<header>
 																		<figure>
-																			<a href="<?php echo $permalink."version/".$version_prod;?>/doc/all/#search-anchor"><img src="<?php echo $image_prod;?>" alt="" width="150" height="150" /></a>
+																			<a href="<?php echo $permalink."version/".$version_prod;?>/doc/all/"><img src="<?php echo $image_prod;?>" alt="" width="150" height="150" /></a>
 																			<p>
 																				<a href="<?php echo $image_prod_full;?>" class="loupe-produit-version" data-fancybox>
 																					<svg id="loupe" x="0px" y="0px" viewBox="0 0 21 21"><path d="M20.6,19.1l-6.5-6.5c1-1.3,1.6-3,1.6-4.8c0-4.3-3.5-7.9-7.9-7.9S0,3.5,0,7.9s3.5,7.9,7.9,7.9c1.8,0,3.4-0.6,4.7-1.6l6.5,6.5 c0.2,0.2,0.5,0.3,0.8,0.3c0.3,0,0.6-0.1,0.8-0.3C21.1,20.3,21.1,19.6,20.6,19.1z M2.2,7.9c0-3.1,2.6-5.7,5.7-5.7s5.7,2.6,5.7,5.7 s-2.6,5.7-5.7,5.7S2.2,11,2.2,7.9z"/></svg>
@@ -109,7 +109,7 @@ get_header();
 																	</header>
 																	<div class="docuemnt-entry">
 																		<p class="docuemnt-meta">
-																			<span class="version"><?php _e('Version','symcod'); ?>: <a href="<?php echo $permalink."version/".$version_prod;?>/doc/all/#search-anchor"><strong><?php echo $version_prod;?></strong></a></span>
+																			<span class="version"><?php _e('Version','symcod'); ?>: <a href="<?php echo $permalink."version/".$version_prod;?>/doc/all/"><strong><?php echo $version_prod;?></strong></a></span>
 																		</p>
 																		<p class="description"><?php echo $description_prod;?></p>
 																	</div>
@@ -134,7 +134,7 @@ get_header();
 										if(  !empty( $version) && $version != 'all' && !empty($categorie) ):  ?>
 											
 											<div class="serach-step-header">
-												<h3 id="version-product-title"><span class="etape"><a href="<?php echo $product_permalink;?>version/all/#search-anchor"><?php _e('Étape','symcod'); ?> 2</a></span><span><a href="<?php echo $product_permalink;?>version/all/#search-anchor">Version: </a></span><?php echo $version;?></h3>
+												<h3 id="version-product-title"><span class="etape"><a href="<?php echo $product_permalink;?>version/all/"><?php _e('Étape','symcod'); ?> 2</a></span><span><a href="<?php echo $product_permalink;?>version/all/">Version: </a></span><?php echo $version;?></h3>
 												
 											</div>
 											</div><!-- #entry-header-produit -->
@@ -161,7 +161,6 @@ get_header();
 												
 											
 												foreach( $tous_les_documents[0] as $doc ){
-													
 													$document_ids[] = array( 'ID' => $doc['document']->ID, "cat" => $doc['categorie_du_document'], "menu_order" => $doc['document']->menu_order);	
 																							
 													if( ! in_array($doc['categorie_du_document'], $liste_des_categories_select ) ){
@@ -182,7 +181,6 @@ get_header();
 														$category_id_order = get_field('id_ordre',$category_order);
 														
 														$categories_array[] = array($doc['menu_order'],$doc['cat']);
-														//$categories_array[$category_id_order][] = '<li data-categorie="'.$categorie.'" class="document-list-result-item categorie-document-list-result-item document-list-result-item-title-li"><h4>'.$category_id_order.' - '.$categorie.'</h4></li>';
 													}
 												}
 												sort($categories_array);
@@ -205,9 +203,9 @@ get_header();
 											?>
 											
 											<form id="form-categorie-document">
-												<span class="etape bordered"><a href="<?php echo $documentation_permalink;?>/#search-anchor" rel="bookmark"><?php _e('Étape','symcod'); ?> 3</a></span>
+												<span class="etape bordered"><a href="<?php echo $documentation_permalink;?>/" rel="bookmark"><?php _e('Étape','symcod'); ?> 3</a></span>
 												<select id="categorie-document" name="categorie-document">
-													<option value="<?php echo $product_permalink;?>version/<?php echo $version;?>/doc/all/#search-anchor" ><?php _e('Tous les documents','symcod'); ?></option>
+													<option value="<?php echo $product_permalink;?>version/<?php echo $version;?>/doc/all/" ><?php _e('Tous les documents','symcod'); ?></option>
 													
 													<?php
 																																					
@@ -216,7 +214,7 @@ get_header();
 															$selected = ( $slug_cat == $categorie ) ? 'selected' : '';
 													?>
 															
-															<option value="<?php echo $product_permalink;?>version/<?php echo $version;?>/doc/<?php echo sanitize_title( $cat[1] );?>/#search-anchor" <?php echo $selected;?>><?php echo $cat[1];?></option>
+															<option value="<?php echo $product_permalink;?>version/<?php echo $version;?>/doc/<?php echo sanitize_title( $cat[1] );?>/" <?php echo $selected;?>><?php echo $cat[1];?></option>
 													<?php } ?>												
 												</select>
 												
@@ -238,7 +236,9 @@ get_header();
 										
 															
 															foreach( $doc as $d ){
+																
 																$document = $d[2];
+																
 																
 																$image_data = get_field('image',$document);
 																
@@ -260,7 +260,7 @@ get_header();
 																$image_prod_full = $image_data["sizes"]['large'];																
 																												
 														?>
-															<li id="result-item-<?php echo  $document;?>" data-categorie="<?php echo $categorie;?>" class="document-list-result-item categorie-document-list-result-item document--item">
+															<li id="result-item-<?php echo  $document;?>" data-categorie="<?php echo $doc_cat;?>" class="document-list-result-item categorie-document-list-result-item document--item">
 																	
 																	<?php if($image == "Hello dude!"): ?>
 																	<header>
@@ -277,7 +277,7 @@ get_header();
 																	<?php endif; ?>
 																	
 																	<div class="docuemnt-entry">
-																		<h3><?php echo $menu_order;?> - <?php echo $nom_du_document;?>
+																		<h3 data-menu-order="<?php echo $menu_order;?>"><?php echo $nom_du_document;?>
 																		
 																		<?php if( !empty( $version_du_document )): ?>
 																		 <span class="version"><?php _e('Ver.','symcod'); ?>: <strong><?php echo $version_du_document;?></strong></span>
@@ -311,8 +311,15 @@ get_header();
 												jQuery(document).ready( function($){
 													
 													var cat_title = $("option:selected", "#categorie-document").text();
-													$("#categorie-title").html( cat_title );
-
+													console.log(cat_title);
+													//$("#categorie-title").html( cat_title );
+													$(".categorie-document-list-result-item").each( function(){
+														if( $(this).attr("data-categorie") != cat_title && cat_title != "Tous les documents"){
+															$(this).hide();
+														}else {
+															$(this).show();
+														}
+													});
 												});
 											</script>
 											<div id="selected-final-result"></div>
