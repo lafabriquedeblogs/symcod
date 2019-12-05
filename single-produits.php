@@ -7,7 +7,6 @@
  * @package symcod
  */
 
-
 get_header();
 
 		$post_id = get_the_id();
@@ -15,6 +14,7 @@ get_header();
 		
 		$version = get_query_var('version');
 		$categorie = get_query_var('doc');
+		
 		
 		
 		$versions_produit_disponibles_raw =  str_replace("<br />", ",", get_field('versions_produit'));
@@ -159,19 +159,49 @@ get_header();
 													$tous_les_documents[] = $doc['ajouter_un_document'];
 												}
 												
+											
 												foreach( $tous_les_documents[0] as $doc ){
 													
-													$category = wp_get_post_terms( $doc['document'], 'taxdocument', array('fields' => 'all') );
-													
-													
-													$document_ids[] = array( $doc['document'], $category[0]->name);
-													
-													if( ! in_array( $category[0]->name, $liste_des_categories_select ) ){
-														
-														$liste_des_categories_select[] = $category[0]->name;
+													$document_ids[] = array( 'ID' => $doc['document']->ID, "cat" => $doc['categorie_du_document'], "menu_order" => $doc['document']->menu_order);	
+																							
+													if( ! in_array($doc['categorie_du_document'], $liste_des_categories_select ) ){
+														$liste_des_categories_select[] = $doc['categorie_du_document'];
 													}
 												}
 												
+												$categories_array = array();
+												$categorie_display. array();
+												
+												foreach( $document_ids as $doc ){
+
+													if( !in_array( $doc['cat'], $categorie_display )){
+														
+														$categorie_display[] = $doc['cat'];
+													
+														$category_order = get_term_by('name',$doc['cat'] ,'taxdocument' );
+														$category_id_order = get_field('id_ordre',$category_order);
+														
+														$categories_array[] = array($doc['menu_order'],$doc['cat']);
+														//$categories_array[$category_id_order][] = '<li data-categorie="'.$categorie.'" class="document-list-result-item categorie-document-list-result-item document-list-result-item-title-li"><h4>'.$category_id_order.' - '.$categorie.'</h4></li>';
+													}
+												}
+												sort($categories_array);
+												
+												
+												$all_docs = array();
+												
+												foreach( $categories_array as $a ){
+													$dd = array();
+													
+													foreach( $tous_les_documents[0] as $doc ){
+														if( $doc['categorie_du_document'] == $a[1]){
+															$dd[] = array($doc['document']->menu_order,$doc['document']->post_title,$doc['document']->ID);
+														}
+													}
+													sort($dd);
+													$all_docs[$a[1]] = $dd;
+												}
+													
 											?>
 											
 											<form id="form-categorie-document">
@@ -181,12 +211,12 @@ get_header();
 													
 													<?php
 																																					
-														foreach( $liste_des_categories_select as $cat ){
-															$slug_cat = sanitize_title( $cat );
+														foreach( $categories_array as $cat ){
+															$slug_cat = sanitize_title( $cat[1] );
 															$selected = ( $slug_cat == $categorie ) ? 'selected' : '';
 													?>
 															
-															<option value="<?php echo $product_permalink;?>version/<?php echo $version;?>/doc/<?php echo sanitize_title( $cat );?>/#search-anchor" <?php echo $selected;?>><?php echo $cat;?></option>
+															<option value="<?php echo $product_permalink;?>version/<?php echo $version;?>/doc/<?php echo sanitize_title( $cat[1] );?>/#search-anchor" <?php echo $selected;?>><?php echo $cat[1];?></option>
 													<?php } ?>												
 												</select>
 												
@@ -194,43 +224,16 @@ get_header();
 												<input type="hidden" id="input_product_id" value="<?php echo get_the_id();?>" />
 											</form>
 
-											<?php /* <h2>Yep yep!</h2> */ 
-											
-														//tableau de sortie
-														$full_array = array();
-											?>
-											
+																						
 											<ul id="documentation-search-results">
 												
 												<?php
 													
-													// tableau des categories avec les documents
-													$categories_array = array();
-													$categorie_display. array();
 													
-													foreach( $document_ids as $doc ){
-														
-														$categorie = $doc[1];
-														
-														if( !in_array( $categorie, $categorie_display )){
-															
-															$categorie_display[] = $categorie;
-														
-															$category_order = get_term_by('name',$categorie ,'taxdocument' );
-															$category_id_order = get_field('id_ordre',$category_order);
-															
-															$categories_array[] = $category_id_order.'-'.$categorie;
-															//$categories_array[$category_id_order][] = '<li data-categorie="'.$categorie.'" class="document-list-result-item categorie-document-list-result-item document-list-result-item-title-li"><h4>'.$category_id_order.' - '.$categorie.'</h4></li>';
-														}
-													}
-			
-													echo '<pre>';
-														var_dump($categories_array);
-													echo '</pre>';
-												
+																			
 													foreach( $document_ids as $doc ){
 																												
-														$document = $doc[0];
+														$document = $doc["ID"];
 														
 														$image_data = get_field('image',$document);
 														
@@ -244,94 +247,66 @@ get_header();
 														
 														$menu_order = get_post_field('menu_order', $document);
 														
-														
 														if($telecharger_un_document){
 															$url_du_document = $telecharger_un_document;
 														}
 														
 														$image = $image_data["sizes"]['thumbnail'];
-														$image_prod_full = $image_data["sizes"]['large'];				
-																												
-														$categorie = $doc[1];
-														$documents_array = array();
+														$image_prod_full = $image_data["sizes"]['large'];
 														
-														foreach($categories_array as $k => $cat){
+														
+														$categorie = $doc["cat"];
+														
+														if( !in_array( $categorie, $categorie_display )){
 															
-															
-															$category_order = get_term_by('name',$cat[0] ,'taxdocument' );
-															$category_id_order = get_field('id_ordre',$category_order);
-															
-															
-															
-															if( has_term( $cat[0],'taxdocument',$document ) ){
-																
-																$documents_array_wrap = array();
-																
-																//$documents_array['menu_order'] = $menu_order;
-/*
-																
-																ob_start();
-													
-																
-															?>
-																	<li id="result-item-<?php echo  $document;?>" data-categorie="<?php echo $categorie;?>" class="document-list-result-item categorie-document-list-result-item document--item">
-																			
-																			<?php if($image == "Hello dude!"): ?>
-																			<header>
-																				<figure>
-																					<img src="<?php echo $image;?>" alt="" width="150" height="150" />
-																					
-																				</figure>
-																				<div class="icon-download">
-																					<a  href="<?php echo $image_prod_full;?>" class="loupe-produit-version" data-fancybox>
-																						<svg id="loupe" x="0px" y="0px" viewBox="0 0 21 21"><path d="M20.6,19.1l-6.5-6.5c1-1.3,1.6-3,1.6-4.8c0-4.3-3.5-7.9-7.9-7.9S0,3.5,0,7.9s3.5,7.9,7.9,7.9c1.8,0,3.4-0.6,4.7-1.6l6.5,6.5 c0.2,0.2,0.5,0.3,0.8,0.3c0.3,0,0.6-0.1,0.8-0.3C21.1,20.3,21.1,19.6,20.6,19.1z M2.2,7.9c0-3.1,2.6-5.7,5.7-5.7s5.7,2.6,5.7,5.7 s-2.6,5.7-5.7,5.7S2.2,11,2.2,7.9z"/></svg>
-																					</a>
-																				</div>
-																			</header>
-																			<?php endif; ?>
-																			
-																			<div class="docuemnt-entry">
-																				<h3><?php echo $menu_order;?> - <?php echo $nom_du_document;?>
-																				
-																				<?php if( !empty( $version_du_document )): ?>
-																				 <span class="version"><?php _e('Ver.','symcod'); ?>: <strong><?php echo $version_du_document;?></strong></span>
-																				<?php endif; ?>
-																				
-																				</h3>
-																	
-																				<p class="description"><?php echo $description_courte;?></p>
-																				<a href="<?php echo $url_du_document; ?>" target="_blank" class="download">
-																					<svg class="icon-type-download" width="64" height="64">
-																					    <use xlink:href="<?php echo esc_url( "{$type_de_document['_file_url']}#{$type_de_document['ID']}" ); ?>"></use>
-																					</svg>
-																					<span><?php _e('Télécharger le document','symcod'); ?></span>
-																				</a>
-																			</div>
-																	</li>
-																										
-															<?php 																
-																$ob = ob_get_clean();
-																
-*/
-															
-																
-																
-															}
-															$categories_array[$k][] = $documents_array;
-															
-															//sort($categories_array[$k]);
+															echo '<li data-categorie="'.$categorie.'" class="document-list-result-item categorie-document-list-result-item document-list-result-item-title-li"><h4>'.$categorie.'</h4></li>';
+															$categorie_display[] = $categorie;
 														}
+																												
+														?>
+															<li id="result-item-<?php echo  $document;?>" data-categorie="<?php echo $categorie;?>" class="document-list-result-item categorie-document-list-result-item document--item">
+																	
+																	<?php if($image == "Hello dude!"): ?>
+																	<header>
+																		<figure>
+																			<img src="<?php echo $image;?>" alt="" width="150" height="150" />
+																			
+																		</figure>
+																		<div class="icon-download">
+																			<a  href="<?php echo $image_prod_full;?>" class="loupe-produit-version" data-fancybox>
+																				<svg id="loupe" x="0px" y="0px" viewBox="0 0 21 21"><path d="M20.6,19.1l-6.5-6.5c1-1.3,1.6-3,1.6-4.8c0-4.3-3.5-7.9-7.9-7.9S0,3.5,0,7.9s3.5,7.9,7.9,7.9c1.8,0,3.4-0.6,4.7-1.6l6.5,6.5 c0.2,0.2,0.5,0.3,0.8,0.3c0.3,0,0.6-0.1,0.8-0.3C21.1,20.3,21.1,19.6,20.6,19.1z M2.2,7.9c0-3.1,2.6-5.7,5.7-5.7s5.7,2.6,5.7,5.7 s-2.6,5.7-5.7,5.7S2.2,11,2.2,7.9z"/></svg>
+																			</a>
+																		</div>
+																	</header>
+																	<?php endif; ?>
+																	
+																	<div class="docuemnt-entry">
+																		<h3><?php echo $menu_order;?> - <?php echo $nom_du_document;?>
+																		
+																		<?php if( !empty( $version_du_document )): ?>
+																		 <span class="version"><?php _e('Ver.','symcod'); ?>: <strong><?php echo $version_du_document;?></strong></span>
+																		<?php endif; ?>
+																		
+																		</h3>
 
+																		<p class="description"><?php echo $description_courte;?></p>
+																		<?php
+																		/*
+																		<p class="docuemnt-meta">
+																			<span class="type"><?php _e('Type de document','symcod'); ?>: <strong><?php echo strtoupper( $type_de_document["ID"]);?></strong></span>
+																		</p>
+																		*/
+																		?>
+																		<a href="<?php echo $url_du_document; ?>" target="_blank" class="download">
+																			<svg class="icon-type-download" width="64" height="64">
+																			    <use xlink:href="<?php echo esc_url( "{$type_de_document['_file_url']}#{$type_de_document['ID']}" ); ?>"></use>
+																			</svg>
+																			<span><?php _e('Télécharger le document','symcod'); ?></span>
+																		</a>
+																	</div>
+															</li>														
+												<?php } 
 													
-														} 
-													//ksort($categories_array);	
-													echo '<pre>';
-													
-													   //var_dump(json_encode($categories_array,JSON_PRETTY_PRINT));
-													   //var_dump($categories_array);
-													echo '</pre>';
-													
-														
 												?>
 											</ul>
 											<script>

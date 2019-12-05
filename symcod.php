@@ -432,7 +432,6 @@ function my_custom_function( $content, $field, $value, $lead_id, $form_id ){
 }
 
 
-
 function unique_multidim_array($array, $key) {
     
     $temp_array = array();
@@ -448,17 +447,6 @@ function unique_multidim_array($array, $key) {
     }
     return $temp_array;
 }
-
-/*
-function sortByOrder($a, $b) {
-    return $a['menu_order'] - $b['menu_order'];
-}
-*/
-function cmp_by_optionNumber($a, $b) {
-  return $a["menu_order"] - $b["menu_order"];
-  //return strcasecmp($a['menu_order'], $b['menu_order']);
-}
-
 
 
 include( plugin_dir_path( __FILE__ ) . '/symcod-templates.php');
