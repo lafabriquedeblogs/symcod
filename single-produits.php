@@ -262,7 +262,7 @@ get_header();
 
 																		<p class="description"><?php echo $description_courte;?></p>
 																		<?php
-																			/*
+																		/*
 																		<p class="docuemnt-meta">
 																			<span class="type"><?php _e('Type de document','symcod'); ?>: <strong><?php echo strtoupper( $type_de_document["ID"]);?></strong></span>
 																		</p>
