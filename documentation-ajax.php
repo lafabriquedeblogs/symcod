@@ -30,8 +30,8 @@ get_header();
 							<div id="div-nom-produit">
 								<form id="form-nom-produit">
 									<div class="form-nom-produit-champ" id="champ-text">
-										<label class="input-label" for="nom-produit"><?php _e('Tous les produits','symcod'); ?><?php /*_e('Saisir le nom du produit','symcod');*/ ?></label>
-										<input type="text" id="nom-produit" name="nom-produit" placeholder=""/>
+<!-- 										<label class="input-label" for="nom-produit"><?php _e('Tous les produits','symcod'); ?><?php /*_e('Saisir le nom du produit','symcod');*/ ?></label> -->
+										<input type="text" id="nom-produit" name="nom-produit" placeholder="<?php _e('Tous les produits','symcod'); ?>"/>
 									</div>
 									<div class="form-nom-produit-champ" id="champ-submit">
 										<div class="wp-block-button">
