@@ -43,10 +43,11 @@ get_header();
 		//while ( have_posts() ) :
 		
 			//the_post();
+			//$etape_1_permalink = get_permalink( apply_filters( 'wpml_object_id', 55, '', TRUE  ));
 			
 			$product_permalink = get_permalink(get_the_id());
 			
-			$documentation_permalink = get_permalink( apply_filters( 'wpml_object_id', 55, 'produits', TRUE  ));
+			$documentation_permalink = get_permalink( apply_filters( 'wpml_object_id', 55, 'page', TRUE  ));
 			
 		?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -63,7 +64,7 @@ get_header();
 								
 								<div id="entry-header-produit">
 								<div>
-									<h3 id="produit-title" class="entry-title"><span class="etape"><a href="<?php echo $documentation_permalink;?>/" rel="bookmark"><?php _e('Étape','symcod'); ?> 1</a></span><span class="serach-step-header"><a href="<?php echo $documentation_permalink;?>/" rel="bookmark"><?php _e('Produit','symcod'); ?>:</a></span> <?php the_title();?></h3>	
+									<h3 id="produit-title" class="entry-title"><a href="<?php echo $documentation_permalink;?>" rel="bookmark"><span class="etape"><?php _e('Étape','symcod'); ?> 1</span></a><span class="serach-step-header"><a href="<?php echo $documentation_permalink;?>/" rel="bookmark"><?php _e('Produit','symcod'); ?>:</a></span> <?php the_title();?></h3>	
 								</div>	
 								
 
@@ -77,7 +78,7 @@ get_header();
 										
 										if( !empty( $version) && $version == 'all' && empty($categorie) ):  ?>
 											
-											<h4 id="choisir-version"><span class="etape bordered"><a href="<?php echo $product_permalink;?>version/all/"><?php _e('Étape','symcod'); ?> 2</a></span><span><?php _e('Choisir une version ?','symcod'); ?></span></h4>
+											<h4 id="choisir-version"><a href="<?php echo $product_permalink;?>version/all/"><span class="etape bordered"><?php _e('Étape','symcod'); ?> 2</span></a><span><?php _e('Choisir une version ?','symcod'); ?></span></h4>
 											
 											</div><!-- #entry-header-produit -->
 											
@@ -134,7 +135,7 @@ get_header();
 										if(  !empty( $version) && $version != 'all' && !empty($categorie) ):  ?>
 											
 											<div class="serach-step-header">
-												<h3 id="version-product-title"><span class="etape"><a href="<?php echo $product_permalink;?>version/all/"><?php _e('Étape','symcod'); ?> 2</a></span><span><a href="<?php echo $product_permalink;?>version/all/">Version: </a></span><?php echo $version;?></h3>
+												<h3 id="version-product-title"><a href="<?php echo $product_permalink;?>version/all/"><span class="etape"><?php _e('Étape','symcod'); ?> 2</span></a><span><a href="<?php echo $product_permalink;?>version/all/">Version: </a></span><?php echo $version;?></h3>
 												
 											</div>
 											</div><!-- #entry-header-produit -->
@@ -203,7 +204,7 @@ get_header();
 											?>
 											
 											<form id="form-categorie-document">
-												<span class="etape bordered"><a href="<?php echo $documentation_permalink;?>/" rel="bookmark"><?php _e('Étape','symcod'); ?> 3</a></span>
+												<a href="" rel="bookmark"><span class="etape bordered"><?php _e('Étape','symcod'); ?> 3</span></a>
 												<select id="categorie-document" name="categorie-document">
 													<option value="<?php echo $product_permalink;?>version/<?php echo $version;?>/doc/all/" ><?php _e('Tous les documents','symcod'); ?></option>
 													

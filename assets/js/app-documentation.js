@@ -73,7 +73,7 @@
 	$(d).ready( function(){
 		
 		$("#form-nom-produit").on("submit", function(e){
-			console.log(e.which);
+			//console.log(e.which);
 			e.preventDefault();
 			search_product();
 		});
