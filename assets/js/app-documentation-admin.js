@@ -2,11 +2,11 @@
 
 jQuery(document).ready( function($){
 	
-	$(".acf-repeater").on( "change", '.acf-field-5db0a3dd625c7 select', function(e){		
+	$(".acf-repeater").on( "change", '[data-key="field_5db0a3dd625c7"] select', function(e){		
 		var _row = $(this).parent().parent().parent();
 		var _cal = $(this).val();
-		var _input = _row.children('.acf-field-5db0a5d5201ad').find('input');
-			
+		//var _input = _row.children('.acf-field-5db0a5d5201ad').find('input');
+		var _input = _row.children('[data-key="field_5db0a5d5201ad"]').find('input');	
 			console.log( _input );
 			
 			$.ajax({
@@ -56,7 +56,7 @@ jQuery(document).ready( function($){
 				
 				},
 				}).done( function(response) {
-					console.log(response.nom);
+					//console.log(response.nom);
 					_input.val( response.nom );
 					
 					//var $nombre_posts = response.post_count;

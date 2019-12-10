@@ -582,7 +582,7 @@
 		"mi": 1,
 		"oA": 0,
 		"oAP": "/assets/js/app-documentation-admin-min.js",
-		"oF": 0,
+		"oF": 2,
 		"sC": 3,
 		"tS": 0
 		},
@@ -696,6 +696,14 @@
 		"hM": 0,
 		"oA": 0,
 		"oAP": "/includes/sort_documents_produits.php",
+		"oF": 0
+		},
+	"/single-produits copie.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/single-produits copie.php",
 		"oF": 0
 		},
 	"/single-produits.php": {

@@ -149,21 +149,19 @@ get_header();
 												$tous_les_documents = array();
 												$liste_des_categories_select = array();
 												$document_ids = array();
-												
-												// Récupération des documents appartement à la version choisie du produit																								
+																																						
 												foreach( $all_rows as $row ){
 													if( $row['version'] ==  $version ){
 														$product_by_version[] = $row;
 													}
 												}
 												
-												// Extraction et Ajout des document dans un tableau
 												foreach( $product_by_version as $doc ){
-													$tous_les_documents = $doc['ajouter_un_document'];
-												}	
+													$tous_les_documents[] = $doc['ajouter_un_document'];
+												}
 												
-												
-												foreach( $tous_les_documents as $doc ){
+											
+												foreach( $tous_les_documents[0] as $doc ){
 													$document_ids[] = array( 'ID' => $doc['document']->ID, "cat" => $doc['categorie_du_document'], "menu_order" => $doc['document']->menu_order);	
 																							
 													if( ! in_array($doc['categorie_du_document'], $liste_des_categories_select ) ){
@@ -175,30 +173,26 @@ get_header();
 												$categorie_display. array();
 												
 												foreach( $document_ids as $doc ){
-													
+
 													if( !in_array( $doc['cat'], $categorie_display )){
 														
 														$categorie_display[] = $doc['cat'];
 													
 														$category_order = get_term_by('name',$doc['cat'] ,'taxdocument' );
-														$category_id_order = intval( get_field('id_ordre',$category_order));
+														$category_id_order = get_field('id_ordre',$category_order);
 														
-														if( empty($category_id_order)) $category_id_order = 0;
-														
-														//$categories_array[] = array($doc['menu_order'],$doc['cat']);
-														$categories_array[] = array($category_id_order,$doc['cat']);
+														$categories_array[] = array($doc['menu_order'],$doc['cat']);
 													}
 												}
-												
 												sort($categories_array);
-
+												
 												
 												$all_docs = array();
 												
 												foreach( $categories_array as $a ){
 													$dd = array();
 													
-													foreach( $tous_les_documents as $doc ){
+													foreach( $tous_les_documents[0] as $doc ){
 														if( $doc['categorie_du_document'] == $a[1]){
 															$dd[] = array($doc['document']->menu_order,$doc['document']->post_title,$doc['document']->ID);
 														}
