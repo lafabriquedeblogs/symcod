@@ -16,7 +16,6 @@ get_header();
 		$categorie = get_query_var('doc');
 		
 		
-		
 		$versions_produit_disponibles_raw =  str_replace("<br />", ",", get_field('versions_produit'));
 		$versions_produit_disponibles = preg_replace('/\s/', '', $versions_produit_disponibles_raw);
 		$versions_produit_array = explode(",", $versions_produit_disponibles);
