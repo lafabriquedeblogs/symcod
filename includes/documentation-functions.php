@@ -29,7 +29,8 @@
 			'posts_per_page' => -1,
 			'post_status' => 'publish',
 			'suppress_filters' => false,
-			'orderby' => 'title',
+			'orderby' => 'menu_order',
+			'order' => 'ASC',
 			'search_prod_title' => $search_term,
 		);
 		

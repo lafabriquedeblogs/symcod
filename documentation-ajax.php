@@ -51,7 +51,8 @@ get_header();
 								'post_type' => array('produits'),
 								'posts_per_page' => -1,
 								'post_status' => 'publish',
-								'orderby' => 'title',
+								'orderby' => 'menu_order',
+								'order' => 'ASC'
 							);
 							
 							$products_list = get_product_list($args);

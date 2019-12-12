@@ -156,6 +156,7 @@ get_header();
 													}
 												}
 												
+												
 												// Extraction et Ajout des document dans un tableau
 												foreach( $product_by_version as $doc ){
 													$tous_les_documents = $doc['ajouter_un_document'];
@@ -188,9 +189,8 @@ get_header();
 														$categories_array[] = array($category_id_order,$doc['cat']);
 													}
 												}
-												
-												sort($categories_array);
 
+												sort($categories_array);
 												
 												$all_docs = array();
 												
@@ -203,9 +203,9 @@ get_header();
 														}
 													}
 													sort($dd);
-													$all_docs[$a[1]] = $dd;
+													$all_docs[$a[0].'-'.$a[1]] = $dd;
 												}
-													
+												
 											?>
 											
 											<form id="form-categorie-document">
@@ -232,8 +232,7 @@ get_header();
 											<ul id="documentation-search-results">
 												
 												<?php
-													
-													
+											
 																			
 													foreach( $all_docs as $doc_cat => $doc ){															
 														
@@ -283,7 +282,7 @@ get_header();
 																	<?php endif; ?>
 																	
 																	<div class="docuemnt-entry">
-																		<h3 data-menu-order="<?php echo $menu_order;?>"><?php echo $nom_du_document;?>
+																		<h3 data-menu-order="<?php echo $menu_order;?>"><?php echo $menu_order;?> - <?php echo $nom_du_document;?>
 																		
 																		<?php if( !empty( $version_du_document )): ?>
 																		 <span class="version"><?php _e('Ver.','symcod'); ?>: <strong><?php echo $version_du_document;?></strong></span>
