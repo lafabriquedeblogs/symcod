@@ -266,7 +266,7 @@
 	
 	
 	
-	
+	// choix de la version de produit fr
 	//field_5da61f7097ecc
 	function my_acf_load_field_too( $field ) {
 		//global $post;
@@ -287,6 +287,26 @@
 	}
 	add_filter('acf/load_field/key=field_5da61f7097ecc', 'my_acf_load_field_too');	
 	
+	// choix de la version de produit en
+	//field_5dea61e89ed39
+	function my_acf_load_field_tooo( $field ) {
+		//global $post;
+		
+		$post_id = empty($_GET['post']) ? 0 : $_GET['post'];
+	    
+	    $choices = get_field('versions_produit',$post_id,false);
+		$choices = explode("\n", $choices);	
+		// remove any unwanted white space
+		$choices = array_map('trim', $choices);
+		foreach( $choices as $choice ) {
+			//$field['value'] =  sanitize_title( $choice );
+			$field['choices'][$choice] = $choice;
+		}
+	
+	    return $field;
+	    
+	}
+	add_filter('acf/load_field/key=field_5dea61e89ed39', 'my_acf_load_field_tooo');	
 	
 	//field_5cfa9ad184fe0
 	function my_acf_load_field_categories_de_document( $field ) {
