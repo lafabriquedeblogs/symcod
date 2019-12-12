@@ -230,12 +230,16 @@ get_header();
 													
 													<?php
 																																					
-														foreach( $categories_array as $cat ){
-															$slug_cat = sanitize_title( $cat[1] );
+														//foreach( $categories_array as $cat ){
+														foreach($all_docs as $cat => $value ){
+															//$slug_cat = sanitize_title( $cat[1] );
+															//$selected = ( $slug_cat == $categorie ) ? 'selected' : '';
+															$slug_cat = sanitize_title( $cat );
 															$selected = ( $slug_cat == $categorie ) ? 'selected' : '';
 													?>
 															
-															<option value="<?php echo $product_permalink;?>version/<?php echo $version;?>/doc/<?php echo sanitize_title( $cat[1] );?>/" <?php echo $selected;?>><?php echo $cat[1];?></option>
+															<!-- <option value="<?php echo $product_permalink;?>version/<?php echo $version;?>/doc/<?php echo sanitize_title( $cat[1] );?>/" <?php echo $selected;?>><?php echo $cat[1];?></option> -->
+															<option value="<?php echo $product_permalink;?>version/<?php echo $version;?>/doc/<?php echo sanitize_title( $cat );?>/" <?php echo $selected;?>><?php echo $cat;?></option>
 													<?php } ?>												
 												</select>
 												
