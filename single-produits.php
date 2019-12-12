@@ -156,10 +156,10 @@ get_header();
 													}
 												}
 												
-												
 												// Extraction et Ajout des document dans un tableau
 												foreach( $product_by_version as $doc ){
 													$tous_les_documents = $doc['ajouter_un_document'];
+													
 												}	
 												
 												
