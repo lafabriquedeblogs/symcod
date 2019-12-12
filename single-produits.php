@@ -156,17 +156,27 @@ get_header();
 													}
 												}
 												
+												$tous_les_documents = $product_by_version[0]['ajouter_un_document'];
+/*
+												echo '<pre>';
+													var_dump($tous_les_documents);
+												echo '</pre>';
 												// Extraction et Ajout des document dans un tableau
-												foreach( $product_by_version as $doc ){
+												foreach( $product_by_version[0] as $doc ){
 													$tous_les_documents = $doc['ajouter_un_document'];
-													
 												}	
+*/
 												
 												
 												foreach( $tous_les_documents as $doc ){
-													$document_ids[] = array( 'ID' => $doc['document']->ID, "cat" => $doc['categorie_du_document'], "menu_order" => $doc['document']->menu_order);	
+
+													$terms = get_the_terms( $doc['document']->ID, 'taxdocument' );
+													$term = $terms[0];
+
+													
+													$document_ids[] = array( 'ID' => $doc['document']->ID, "cat" => $term->name, "menu_order" => $term->menu_order);	
 																							
-													if( ! in_array($doc['categorie_du_document'], $liste_des_categories_select ) ){
+													if( ! in_array($term->name, $liste_des_categories_select ) ){
 														$liste_des_categories_select[] = $doc['categorie_du_document'];
 													}
 												}
@@ -191,14 +201,19 @@ get_header();
 												}
 
 												sort($categories_array);
-												
+
+																		
 												$all_docs = array();
 												
 												foreach( $categories_array as $a ){
 													$dd = array();
 													
 													foreach( $tous_les_documents as $doc ){
-														if( $doc['categorie_du_document'] == $a[1]){
+														
+														$terms = get_the_terms( $doc['document']->ID, 'taxdocument' );
+														$term = $terms[0];
+														
+														if( $term->name == $a[1]){
 															$dd[] = array($doc['document']->menu_order,$doc['document']->post_title,$doc['document']->ID);
 														}
 													}
