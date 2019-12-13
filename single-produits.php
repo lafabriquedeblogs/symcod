@@ -1,13 +1,5 @@
 <?php
-/**
- * The template for displaying all single posts
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
- *
- * @package symcod
- */
-
-get_header();
+		get_header();
 
 		$post_id = get_the_id();
 		$permalink = get_permalink( $post_id );
