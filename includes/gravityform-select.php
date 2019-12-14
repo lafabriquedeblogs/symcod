@@ -177,37 +177,28 @@ function my_custom_function( $content, $field, $value, $lead_id, $form_id ){
 
 
 add_filter( 'gform_field_content_4_23', 'my_custom_function_tion', 10, 5 );
-
+add_filter( 'gform_field_content_4_90', 'my_custom_function_tion', 10, 5 );
+add_filter( 'gform_field_content_4_32', 'my_custom_function_tion', 10, 5 );
+add_filter( 'gform_field_content_4_38', 'my_custom_function_tion', 10, 5 );
+add_filter( 'gform_field_content_4_44', 'my_custom_function_tion', 10, 5 );
+add_filter( 'gform_field_content_4_50', 'my_custom_function_tion', 10, 5 );
+add_filter( 'gform_field_content_4_56', 'my_custom_function_tion', 10, 5 );
+add_filter( 'gform_field_content_4_62', 'my_custom_function_tion', 10, 5 );
+add_filter( 'gform_field_content_4_68', 'my_custom_function_tion', 10, 5 );
+add_filter( 'gform_field_content_4_74', 'my_custom_function_tion', 10, 5 );
+add_filter( 'gform_field_content_4_80', 'my_custom_function_tion', 10, 5 );
+add_filter( 'gform_field_content_4_86', 'my_custom_function_tion', 10, 5 );
 function my_custom_function_tion( $content, $field, $value, $lead_id, $form_id ){
 	
 	$content = '<label class="gfield_label" for="input_4_'.$field->id.'">'.__('Catégorie de produits','symcod').'<span class="gfield_required">*</span></label>
 	<div class="ginput_container ginput_container_select">
 		<select name="input_'.$field->id.'" id="input_4_'.$field->id.'" class="medium gfield_select" aria-required="true" aria-invalid="false">';
-				$products_args = array(
-					'post_type' => array('produits'),
-					'posts_per_page' => -1,
-					'post_status' => 'publish',
-					'orderby' => 'title',
-				);
-				$products_query = new WP_Query( $products_args );
-				 while( $products_query->have_posts()){
-					 $products_query->the_post();
-					 $nom_du_produit = get_the_title();
-					 $options = '';
-					 
-					 if( have_rows('ajouter_un_produit_version')){
-						 while( have_rows('ajouter_un_produit_version') ){
-							 the_row();
-							 $version_name = get_sub_field('nom_du_produit_v');
-							 $options .= '<option value="'.$version_name.'">'.$version_name.'</option>';
-						 }
-						$content .= '<optgroup label="'.$nom_du_produit.'">'.$options.'</optgroup>';	 
-					 } else {
-						 $content .= '<option value="'.$nom_du_produit.'">'.$nom_du_produit.'</option>';
-					 }
-					 
-					 
-				 }			
+				$terms = get_terms( 'catprods', array(
+					'hide_empty' => false,
+				) );
+				foreach( $terms as $term ){
+					$content .= '<option value="'.$term->term_id.'">'.$term->name.'</option>';
+				}
 
 	$content .= '</select>
 	</div>';
