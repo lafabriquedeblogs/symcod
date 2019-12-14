@@ -290,7 +290,45 @@ class symcod_produits {
 			'show_in_quick_edit'		 => true,
 		);
 		register_taxonomy( 'taxdocument', array( 'document' ), $args );
+
+		unset($args);
+		unset($labels);
+		unset($rewrite);
 		
+		$labels = array(
+			'name'                       => _x( 'Catégories de produit', 'Taxonomy General Name', 'symcod' ),
+			'singular_name'              => _x( 'Catégorie de produit', 'Taxonomy Singular Name', 'symcod' ),
+			'menu_name'                  => __( 'Catégories de produit', 'symcod' ),
+			'all_items'                  => __( 'All Items', 'symcod' ),
+			'parent_item'                => __( 'Parent Item', 'symcod' ),
+			'parent_item_colon'          => __( 'Parent Item:', 'symcod' ),
+			'new_item_name'              => __( 'New Item Name', 'symcod' ),
+			'add_new_item'               => __( 'Add New Item', 'symcod' ),
+			'edit_item'                  => __( 'Edit Item', 'symcod' ),
+			'update_item'                => __( 'Update Item', 'symcod' ),
+			'view_item'                  => __( 'View Item', 'symcod' ),
+			'separate_items_with_commas' => __( 'Separate items with commas', 'symcod' ),
+			'add_or_remove_items'        => __( 'Add or remove items', 'symcod' ),
+			'choose_from_most_used'      => __( 'Choose from the most used', 'symcod' ),
+			'popular_items'              => __( 'Popular Items', 'symcod' ),
+			'search_items'               => __( 'Search Items', 'symcod' ),
+			'not_found'                  => __( 'Not Found', 'symcod' ),
+			'no_terms'                   => __( 'No items', 'symcod' ),
+			'items_list'                 => __( 'Items list', 'symcod' ),
+			'items_list_navigation'      => __( 'Items list navigation', 'symcod' ),
+		);
+		$args = array(
+			'labels'                     => $labels,
+			'hierarchical'               => true,
+			'public'                     => true,
+			'show_ui'                    => true,
+			'show_admin_column'          => true,
+			'show_in_nav_menus'          => true,
+			'show_tagcloud'              => true,
+			'show_in_rest'               => true,
+			'show_in_quick_edit'		 => true,
+		);
+		register_taxonomy( 'catprods', array( 'produits' ), $args );		
 	}
 	
 	public function produits_content_filter($content){
@@ -392,45 +430,6 @@ function file_type_acf_svg_icon_file_path( $file_path ) {
     //return get_theme_file_path( __FILE__ ).'assets/images/file-types-sprite.svg';
     return get_theme_file_path( 'assets/img/icons/file-types-sprite.svg' );
 }
-	
-add_filter( 'gform_field_content_4_24', 'my_custom_function', 10, 5 );
-
-function my_custom_function( $content, $field, $value, $lead_id, $form_id ){
-	
-	$content = '<label class="gfield_label" for="input_4_24">'.__('Produits','symcod').'<span class="gfield_required">*</span></label>
-	<div class="ginput_container ginput_container_select">
-		<select name="input_24" id="input_4_24" class="medium gfield_select" aria-required="true" aria-invalid="false">';
-				$products_args = array(
-					'post_type' => array('produits'),
-					'posts_per_page' => -1,
-					'post_status' => 'publish',
-					'orderby' => 'title',
-				);
-				$products_query = new WP_Query( $products_args );
-				 while( $products_query->have_posts()){
-					 $products_query->the_post();
-					 $nom_du_produit = get_the_title();
-					 $options = '';
-					 
-					 if( have_rows('ajouter_un_produit_version')){
-						 while( have_rows('ajouter_un_produit_version') ){
-							 the_row();
-							 $version_name = get_sub_field('nom_du_produit_v');
-							 $options .= '<option value="'.$version_name.'">'.$version_name.'</option>';
-						 }
-						$content .= '<optgroup label="'.$nom_du_produit.'">'.$options.'</optgroup>';	 
-					 } else {
-						 $content .= '<option value="'.$nom_du_produit.'">'.$nom_du_produit.'</option>';
-					 }
-					 
-					 
-				 }			
-
-	$content .= '</select>
-	</div>';
-	return $content;
-}
-
 
 function unique_multidim_array($array, $key) {
     

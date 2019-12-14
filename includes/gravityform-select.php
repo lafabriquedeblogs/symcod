@@ -124,3 +124,93 @@ function form_produits_select_content(){
 }
 add_action( 'wp_ajax_form_produits_select_content', 'form_produits_select_content' );
 add_action( 'wp_ajax_nopriv_form_produits_select_content', 'form_produits_select_content' );
+
+
+
+// Select Produits FOrmulaire de soumission
+add_filter( 'gform_field_content_4_24', 'my_custom_function', 10, 5 );
+add_filter( 'gform_field_content_4_31', 'my_custom_function', 10, 5 );
+add_filter( 'gform_field_content_4_37', 'my_custom_function', 10, 5 );
+add_filter( 'gform_field_content_4_43', 'my_custom_function', 10, 5 );
+add_filter( 'gform_field_content_4_49', 'my_custom_function', 10, 5 );
+add_filter( 'gform_field_content_4_55', 'my_custom_function', 10, 5 );
+add_filter( 'gform_field_content_4_61', 'my_custom_function', 10, 5 );
+add_filter( 'gform_field_content_4_67', 'my_custom_function', 10, 5 );
+add_filter( 'gform_field_content_4_69', 'my_custom_function', 10, 5 );
+add_filter( 'gform_field_content_4_73', 'my_custom_function', 10, 5 );
+add_filter( 'gform_field_content_4_85', 'my_custom_function', 10, 5 );
+function my_custom_function( $content, $field, $value, $lead_id, $form_id ){
+	
+		$content = '<label class="gfield_label" for="input_4_'.$field->id.'">'.__('Produits','symcod').'<span class="gfield_required">*</span></label>
+			<div class="ginput_container ginput_container_select">
+				<select name="input_'.$field->id.'" id="input_4_'.$field->id.'" class="medium gfield_select" aria-required="true" aria-invalid="false">';
+						$products_args = array(
+							'post_type' => array('produits'),
+							'posts_per_page' => -1,
+							'post_status' => 'publish',
+							'orderby' => 'title',
+						);
+						$products_query = new WP_Query( $products_args );
+						 while( $products_query->have_posts()){
+							 $products_query->the_post();
+							 $nom_du_produit = get_the_title();
+							 $options = '';
+							 
+							 if( have_rows('ajouter_un_produit_version')){
+								 while( have_rows('ajouter_un_produit_version') ){
+									 the_row();
+									 $version_name = get_sub_field('nom_du_produit_v');
+									 $options .= '<option value="'.$version_name.'">'.$version_name.'</option>';
+								 }
+								$content .= '<optgroup label="'.$nom_du_produit.'">'.$options.'</optgroup>';	 
+							 } else {
+								 $content .= '<option value="'.$nom_du_produit.'">'.$nom_du_produit.'</option>';
+							 }
+							 
+							 
+						 }			
+			
+			$content .= '</select>
+		</div>';
+	return $content;
+}
+
+
+add_filter( 'gform_field_content_4_23', 'my_custom_function_tion', 10, 5 );
+
+function my_custom_function_tion( $content, $field, $value, $lead_id, $form_id ){
+	
+	$content = '<label class="gfield_label" for="input_4_'.$field->id.'">'.__('Catégorie de produits','symcod').'<span class="gfield_required">*</span></label>
+	<div class="ginput_container ginput_container_select">
+		<select name="input_'.$field->id.'" id="input_4_'.$field->id.'" class="medium gfield_select" aria-required="true" aria-invalid="false">';
+				$products_args = array(
+					'post_type' => array('produits'),
+					'posts_per_page' => -1,
+					'post_status' => 'publish',
+					'orderby' => 'title',
+				);
+				$products_query = new WP_Query( $products_args );
+				 while( $products_query->have_posts()){
+					 $products_query->the_post();
+					 $nom_du_produit = get_the_title();
+					 $options = '';
+					 
+					 if( have_rows('ajouter_un_produit_version')){
+						 while( have_rows('ajouter_un_produit_version') ){
+							 the_row();
+							 $version_name = get_sub_field('nom_du_produit_v');
+							 $options .= '<option value="'.$version_name.'">'.$version_name.'</option>';
+						 }
+						$content .= '<optgroup label="'.$nom_du_produit.'">'.$options.'</optgroup>';	 
+					 } else {
+						 $content .= '<option value="'.$nom_du_produit.'">'.$nom_du_produit.'</option>';
+					 }
+					 
+					 
+				 }			
+
+	$content .= '</select>
+	</div>';
+	return $content;
+}
+
