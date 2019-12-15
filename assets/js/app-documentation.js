@@ -124,6 +124,9 @@
 			return false
 		});
 		
+		$("#gform_4").on("change","select", function(e){
+			e.preventDefault();
+		});
 /*
 		$("#form-nom-produit").on("change","#select-product", function(e){
 			e.preventDefault();
