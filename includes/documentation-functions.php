@@ -289,6 +289,7 @@
 	
 	// choix de la version de produit en
 	//field_5dea61e89ed39
+	//acf-field-5df7b53a66530
 	function my_acf_load_field_tooo( $field ) {
 		//global $post;
 		
@@ -306,7 +307,7 @@
 	    return $field;
 	    
 	}
-	add_filter('acf/load_field/key=field_5dea61e89ed39', 'my_acf_load_field_tooo');	
+	add_filter('acf/load_field/key=field_5df7b53a66530', 'my_acf_load_field_tooo');	
 	
 	//field_5cfa9ad184fe0
 	function my_acf_load_field_categories_de_document( $field ) {
