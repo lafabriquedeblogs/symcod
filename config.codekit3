@@ -45,6 +45,19 @@
 		"oS": 3,
 		"uL": 1
 		},
+	"/assets/css/mobile.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 1,
+		"oAP": "/assets/css/mobile.css",
+		"oF": 1,
+		"oS": 0,
+		"uL": 1
+		},
 	"/assets/images/fleche-select.png": {
 		"ft": 32768,
 		"iS": 4375,

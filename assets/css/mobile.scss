@@ -1,0 +1,64 @@
+@media screen and (max-width:562px){
+	.page-template-documentation-ajax, .single-produits{
+		.entry-title {
+			font-size: 25px;
+			padding-bottom: 0;
+			text-align: center;
+		}		
+	}
+	
+	#section-docu-search {
+		padding-top: 0;
+	}
+	#section-docu-search h2 {
+		font-size: 30px;
+		text-align: center;
+	}
+	
+	#version-product-title {
+		display: flex;
+		flex-direction: column;
+		a {
+			display: block;
+			margin-bottom: 10px;
+		}
+	}
+	
+	#form-nom-produit {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	.document-list-result-item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	#produit-title, #version-product-title, #form-categorie-document {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		line-height: 1;
+		a, span {
+			display: block;
+			margin: 0 0 10px 0;
+		}
+		select {
+			width: 100%;
+		}
+	}
+	#documentation-search-results {
+		h4 {
+			line-height: 1;
+		}
+	}
+/*
+	#form-categorie-document {
+		display: flex;
+		flex-direction: column;
+	}
+*/
+}

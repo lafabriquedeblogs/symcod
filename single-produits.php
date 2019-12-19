@@ -330,7 +330,7 @@
 													console.log(cat_title);
 													//$("#categorie-title").html( cat_title );
 													$(".categorie-document-list-result-item").each( function(){
-														if( $(this).attr("data-categorie") != cat_title && cat_title != "Tous les documents"){
+														if( $(this).attr("data-categorie") != cat_title && cat_title != Documentation.tous_les_documents){
 															$(this).hide();
 														}else {
 															$(this).show();

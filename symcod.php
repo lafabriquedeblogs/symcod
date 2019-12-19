@@ -77,9 +77,14 @@ class symcod_produits {
 		wp_enqueue_style( 'symcod-documentation-css', $this->cssURL( 'documentation.css' ) );
 		wp_enqueue_script( 'symcod-script-fancy', $this->jsURL('fancy-box/jquery.fancybox.min.js'), array('jquery'), null, true );		
 		wp_enqueue_script( 'symcod-documentation-script', $this->jsURL('app-documentation.js'), array('jquery'), null, true );
+		
+		
+		$tous_les_documents = __("Tous les documents","symcod");
+		
 		wp_localize_script( 'symcod-documentation-script', 'Documentation', array(
 			'ajaxurl'          => admin_url( 'admin-ajax.php' ),
 			'docuNonce' => wp_create_nonce( 'documentation-script-nonce' ),
+			'tous_les_documents' => $tous_les_documents,
 		));	
 	}
 	public function admin_enqueue($hook) {
