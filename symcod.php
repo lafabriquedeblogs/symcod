@@ -335,6 +335,7 @@ class symcod_produits {
 		);
 		register_taxonomy( 'catprods', array( 'produits' ), $args );		
 	}
+
 	
 	public function produits_content_filter($content){
 		if ($GLOBALS['post']->post_type === 'produits') {
@@ -414,12 +415,6 @@ function produits_custom_template( $template ) {
     global $post;
 
     if ( 'produits' === $post->post_type && locate_template( array( 'single-produits.php' ) ) !== $template ) {
-        /*
-         * This is a 'movie' post
-         * AND a 'single movie template' is not found on
-         * theme or child theme directories, so load it
-         * from our plugin directory.
-         */
         return plugin_dir_path( __FILE__ ) . 'single-produits.php';
     }
 
@@ -451,6 +446,7 @@ function unique_multidim_array($array, $key) {
     }
     return $temp_array;
 }
+
 
 
 include( plugin_dir_path( __FILE__ ) . '/symcod-templates.php');
