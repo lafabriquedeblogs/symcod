@@ -18,7 +18,6 @@ get_header();
 				</div>
 			</header><!-- .page-header -->
 
-		
 		<section id="section-docu-search" class="section-page">
 			
 			<div id="max-width-docu-search" class="max-width">

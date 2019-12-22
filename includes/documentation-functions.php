@@ -7,8 +7,8 @@
 	*/
 	function docu_search_nom_produits(){
 		
-		add_filter('posts_join', 'cf_search_join' );
-		add_filter('posts_where', 'my_posts_where',10,2);
+		add_filter( 'posts_join', 'cf_search_join' );
+		add_filter( 'posts_where', 'my_posts_where',10,2);
 		add_filter( 'posts_distinct', 'cf_search_distinct' );
 		
 		$nonce = $_POST['mynonce'];
@@ -73,9 +73,19 @@
 			$count = $product_query->post_count;
 			$response_array['post_count'] = $count;
 			
-			while( $product_query->have_posts() ){
-
+			global $sitepress;
+			$current_language = apply_filters( 'wpml_current_language', NULL );
+			
+				
+			while( $product_query->have_posts() ){				
+				
 				$product_query->the_post();
+				
+				$my_post_language_details = apply_filters( 'wpml_post_language_details', NULL, get_the_id() ) ;
+				
+				if( $current_language != $my_post_language_details['language_code'] ){
+					continue;
+				}
 				
 				$versions_produit = str_replace("<br />", ",", get_field('versions_produit'));
 				$categorie_de_document = str_replace("<br />", ",", get_field('categories_de_document'));

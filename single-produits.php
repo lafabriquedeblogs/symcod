@@ -40,6 +40,10 @@
 			
 			$documentation_permalink = get_permalink( apply_filters( 'wpml_object_id', 55, 'page', TRUE  ));
 			
+			$docum_permalink =  get_permalink( 55 );
+			$documentation_permalink_fr = apply_filters( 'wpml_permalink', $docum_permalink , 'fr' ); //get_permalink( apply_filters( 'wpml_object_id', 55, 'page', 'fr'  ));
+			$documentation_permalink_en = apply_filters( 'wpml_permalink', $docum_permalink , 'en' ) ; //get_permalink( apply_filters( 'wpml_object_id', 55, 'page', 'en'  ));
+			
 		?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 						
@@ -210,7 +214,7 @@
 														}
 													}
 													sort($dd);
-													$all_docs[$a[0].'-'.$a[1]] = $dd;
+													$all_docs[$a[1]] = $dd;
 												}
 												
 											?>
@@ -293,7 +297,7 @@
 																	<?php endif; ?>
 																	
 																	<div class="docuemnt-entry">
-																		<h3 data-menu-order="<?php echo $menu_order;?>"><?php echo $menu_order;?> - <?php echo $nom_du_document;?>
+																		<h3 data-menu-order="<?php echo $menu_order;?>"><?php echo $nom_du_document;?>
 																		
 																		<?php if( !empty( $version_du_document )): ?>
 																		 <span class="version"><?php _e('Ver.','symcod'); ?>: <strong><?php echo $version_du_document;?></strong></span>
@@ -327,7 +331,7 @@
 												jQuery(document).ready( function($){
 													
 													var cat_title = $("option:selected", "#categorie-document").text();
-													console.log(cat_title);
+													//console.log(cat_title);
 													//$("#categorie-title").html( cat_title );
 													$(".categorie-document-list-result-item").each( function(){
 														if( $(this).attr("data-categorie") != cat_title && cat_title != Documentation.tous_les_documents){
@@ -356,6 +360,24 @@
 		?>	
 	</div><!-- #primary -->
  
+ 
+ 	<script>
+		jQuery(document).ready( function($){
+			$("#top-navigation #top-menu li.wpml-ls-item a").on("click",function(e){
+				let _l = $(this).attr("title");
+				 
+				e.preventDefault();
+				
+				if( _l == 'FR'){
+					window.location = "<?php echo $documentation_permalink_fr;?>";
+					return;
+				}		
+				window.location = "<?php echo $documentation_permalink_en;?>";
+				
+			});	
+
+		});
+	</script>
 	<?php
 		
 		$term = get_term( 1, 'category');
